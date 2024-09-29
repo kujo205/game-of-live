@@ -33,12 +33,17 @@ In order to run this program complete the following algorithm:
 git clone git@github.com:future-stardust/im-2x-lab-1-kujo205.git
 ```
 on your command line
-2. Run installation script 
 
+2. Run installation script 
 ```bash
 npm i 
 ```
-3. Add input file with the structure shown below
+3. Install `bun` globally
+```bash
+npm i -g bun 
+```
+
+4. Add input file with the structure shown below
 ```md
 100
 5 5
@@ -54,7 +59,7 @@ Second row, second number - height of the field (5 in example)
 
 The matrix below the numbers represents the field, cells of the matrix can be either `x` or `.`
 
-4. Run the command below to start the program
+5. Run the command below to start the program
 ```bash
 bun bun start --input input.txt [OPTIONS]
 ```
@@ -62,14 +67,14 @@ Options:
 - --display_in_terminal - lets you have a colorful output in the terminal, default - false
 - --output output.txt - specify output file, default - output.txt
 
-5. You can run the test using the command below:
+6. You can run the test using the command below:
 ```bash
 bun test
 ```
 
 
 ## Examples
-Here you can see an output of a file, this is called `almosymmetric`
+Here you can see an input file, this is called `almosymmetric` and this is a cool Organism in The Game of life
 ```md
 100
 17 10
