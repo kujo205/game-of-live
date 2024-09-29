@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { GameOfLife } from "./index.ts";
+import { GameOfLife } from "@/modules/gameOfLife";
 
 describe("Game of live", () => {
 	describe("getCellNextGeneration suite", () => {
@@ -38,6 +38,48 @@ describe("Game of live", () => {
 					[".", ".", "."],
 				]);
 				expect(game.getCellNextGeneration(1, 1)).toEqual("x");
+			});
+
+			test("Dies because of 4 alive neighbours", () => {
+				const game = new GameOfLife([
+					[".", ".", "."],
+					["x", "x", "x"],
+					["x", "x", "."],
+				]);
+				expect(game.getCellNextGeneration(1, 1)).toEqual(".");
+			});
+
+			test("Dies because of 5 alive neighbours", () => {
+				const game = new GameOfLife([
+					[".", ".", "."],
+					["x", "x", "x"],
+					["x", "x", "x"],
+				]);
+				expect(game.getCellNextGeneration(1, 1)).toEqual(".");
+			});
+			test("Dies because of 6 alive neighbours", () => {
+				const game = new GameOfLife([
+					[".", ".", "x"],
+					["x", "x", "x"],
+					["x", "x", "x"],
+				]);
+				expect(game.getCellNextGeneration(1, 1)).toEqual(".");
+			});
+			test("Dies because of 7 alive neighbours", () => {
+				const game = new GameOfLife([
+					[".", "x", "x"],
+					["x", "x", "x"],
+					["x", "x", "x"],
+				]);
+				expect(game.getCellNextGeneration(1, 1)).toEqual(".");
+			});
+			test("Dies because of 8 alive neighbours", () => {
+				const game = new GameOfLife([
+					["x", "x", "x"],
+					["x", "x", "x"],
+					["x", "x", "x"],
+				]);
+				expect(game.getCellNextGeneration(1, 1)).toEqual(".");
 			});
 		});
 
@@ -129,6 +171,52 @@ describe("Game of live", () => {
 
 				expect(game.getCellNextGeneration(1, 0)).toEqual(".");
 			});
+		});
+	});
+
+	describe("getAllCellsNextGeneration suite", () => {
+		test("successfully calculates next generation without interacting with border", () => {
+			const game = new GameOfLife([
+				[".", ".", ".", ".", "."],
+				[".", ".", "x", ".", "."],
+				[".", ".", "x", ".", "."],
+				[".", ".", "x", ".", "."],
+				[".", ".", ".", ".", "."],
+			]);
+			expect(
+				(() => {
+					game.getAllCellsNextGeneration();
+					return game.matrix.getMatrix();
+				})(),
+			).toEqual([
+				[".", ".", ".", ".", "."],
+				[".", ".", ".", ".", "."],
+				[".", "x", "x", "x", "."],
+				[".", ".", ".", ".", "."],
+				[".", ".", ".", ".", "."],
+			]);
+		});
+
+		test("successfully calculates next generation with interacting with border", () => {
+			const game = new GameOfLife([
+				[".", ".", "x", ".", "."],
+				[".", ".", "x", ".", "."],
+				[".", ".", ".", ".", "."],
+				[".", ".", ".", ".", "."],
+				[".", ".", "x", ".", "."],
+			]);
+			expect(
+				(() => {
+					game.getAllCellsNextGeneration();
+					return game.matrix.getMatrix();
+				})(),
+			).toEqual([
+				[".", "x", "x", "x", "."],
+				[".", ".", ".", ".", "."],
+				[".", ".", ".", ".", "."],
+				[".", ".", ".", ".", "."],
+				[".", ".", ".", ".", "."],
+			]);
 		});
 	});
 });

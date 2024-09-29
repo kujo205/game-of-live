@@ -1,9 +1,9 @@
-class InfiniteMatrix {
-	private readonly matrix: any[][];
+class InfiniteMatrix<T> {
+	private readonly matrix: T[][];
 	private readonly height: number;
 	private readonly width: number;
 
-	constructor(matrix: any[][]) {
+	constructor(matrix: T[][]) {
 		this.matrix = matrix;
 		this.height = matrix.length;
 		this.width = matrix[0].length;
@@ -18,7 +18,7 @@ class InfiniteMatrix {
 		};
 	}
 
-	setCell(_x: number, _y: number, value: string) {
+	setCell(_x: number, _y: number, value: T) {
 		const { x, y } = this.getYX(_x, _y);
 		this.matrix[y][x] = value;
 	}
@@ -34,7 +34,16 @@ class InfiniteMatrix {
 	}
 
 	print() {
-		console.log("matrix", this.matrix);
+		const rows = [];
+
+		for (const row of this.matrix) {
+			rows.push(row.join("").replaceAll("x", "🟡").replaceAll(".", "⬛️"));
+		}
+
+		console.log(rows.join("\n"), "\n");
+	}
+	getMatrix() {
+		return this.matrix;
 	}
 }
 

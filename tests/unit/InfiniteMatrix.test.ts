@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import InfiniteMatrix from "./index.ts";
+import InfiniteMatrix from "@/modules/InfiniteMatrix";
 
 describe("InfiniteMatrix suite", () => {
 	const matrix = [

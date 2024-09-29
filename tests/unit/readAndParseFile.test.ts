@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { FileParsingError, parseFileInput } from "./index.ts";
+import { FileParsingError, parseFileInput } from "@/modules/readAndParseFile";
 
 describe("Input parser suite", () => {
 	test("Valid file", () => {
@@ -19,13 +19,13 @@ describe("Input parser suite", () => {
 		});
 	});
 
-	test("Invalid file: height doesn't match with input matrix", () => {
+	test("Invalid file: height doesn't match input matrix", () => {
 		const input = "3\n8 5\n........\n..x.....\n..x.....\n..x.....";
 
 		expect(() => parseFileInput(input)).toThrowError(FileParsingError);
 	});
 
-	test("Invalid file: width doesn't match with input matrix", () => {
+	test("Invalid file: width doesn't match input matrix", () => {
 		const input = "\n8 5\n.......\n.x.....\n.x.....\n.x.....\n.......";
 
 		expect(() => parseFileInput(input)).toThrowError(FileParsingError);

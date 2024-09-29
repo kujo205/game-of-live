@@ -3,15 +3,41 @@ import Matrix from "@/modules/InfiniteMatrix";
 export class GameOfLife {
 	height: number;
 	width: number;
-	matrix: Matrix;
+	matrix: Matrix<string>;
 
 	constructor(matrix: string[][]) {
 		this.height = matrix.length;
 		this.width = matrix[0].length;
-
 		this.matrix = new Matrix(matrix);
 	}
 
+	async getMatrixAfterNGenerations(
+		generations: number,
+		displayInTerminal = false,
+	) {
+		for (let i = 0; i < generations; i++) {
+			this.getAllCellsNextGeneration();
+			if (displayInTerminal) {
+				this.matrix.print();
+				await delay(200);
+				console.clear();
+			}
+		}
+
+		return this.matrix;
+	}
+	getAllCellsNextGeneration() {
+		const nextGenMatrix: string[][] = [];
+
+		for (let i = 0; i < this.height; i++) {
+			nextGenMatrix.push([]);
+			for (let j = 0; j < this.width; j++) {
+				nextGenMatrix[i].push(this.getCellNextGeneration(j, i));
+			}
+		}
+
+		this.matrix = new Matrix(nextGenMatrix);
+	}
 	getCellNextGeneration(x: number, y: number) {
 		let aliveNeighbours = 0;
 		let deadNeighbours = 0;
@@ -52,9 +78,6 @@ export class GameOfLife {
 	}
 }
 
-export class GameOfLifeError extends Error {
-	constructor(message: string) {
-		super(message);
-		this.name = "FileParsingError";
-	}
+function delay(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
